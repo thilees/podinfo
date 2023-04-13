@@ -21,7 +21,8 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"dev","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - printf '[{"name":"uat","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > uat-imagedefinitions.json
-      - cat imagedefinitions.json 
+      - cat imagedefinitions.json
+      - aws codepipeline start-pipeline-execution --name test 
 artifacts:
     files: 
       - imagedefinitions.json
