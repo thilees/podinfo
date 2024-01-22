@@ -35,21 +35,49 @@ jobs:
       - name: "Pushing Artifact"
         run: |
           echo "Pushing Artifact"
-
-  Approval:        
-    name: "Approval"
+  
+  DeployTest:        
+    name: "Deploy to Test"
     runs-on: [ubuntu-latest]
     needs: [PushingArtifact]
+    steps:
+      - name: "Deploying"        
+        run: |
+          echo "Deploying"          
+  
+  UATApproval:        
+    name: "UAT Approval"
+    runs-on: [ubuntu-latest]
+    needs: [DeployTest]
+    environment: Prod
+    steps:
+      - name: "Deploying"        
+        run: |
+          echo "Deploying"
+          
+  DeployUAT:        
+    name: "Deploy to UAT"
+    runs-on: [ubuntu-latest]
+    needs: [UATApproval]
+    steps:
+      - name: "Deploying"        
+        run: |
+          echo "Deploying"   
+          
+  ProdApproval:        
+    name: "Approval"
+    runs-on: [ubuntu-latest]
+    needs: [DeployUAT]
     environment: Prod
     steps:
       - name: "Deploying"        
         run: |
           echo "Deploying"
   
-  Deploy:        
+  DeployProd:        
     name: "Deploy"
     runs-on: [ubuntu-latest]
-    needs: [Approval]
+    needs: [ProdApproval]
 
     steps:
       - name: "Deploying"        
@@ -59,7 +87,7 @@ jobs:
   StopRunner:  
     name: "Stop Runner"
     runs-on: [ubuntu-latest]
-    needs: [Deploy]
+    needs: [DeployProd]
     steps:      
       - name: "Stoping Runner"
         shell: bash        
