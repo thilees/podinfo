@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "Dev Deploy"
   UatDeploy:
-    name: Dev Deploy
+    name: UAT Deploy
     if: github.event.inputs.environment == 'UAT'
     runs-on: ubuntu-latest
     needs: [build]
