@@ -1,6 +1,5 @@
 name: myHerd Build and Deployment
 on:
-  push
    workflow_dispatch:
      inputs:
        environment:
