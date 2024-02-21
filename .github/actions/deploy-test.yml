@@ -32,12 +32,13 @@ jobs:
           echo "push"
   
   DevDeploy:
-    name: Dev Deploy
+    name: deveopment env
     if: github.event.inputs.environment == 'Dev'
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: trstringer/manual-approval@v1
+      - name: Approval
+        uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
           approvers: thilees
